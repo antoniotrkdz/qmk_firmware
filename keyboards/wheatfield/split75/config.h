@@ -14,5 +14,19 @@
 #define RGBLED_NUM 8
 #define RGBLIGHT_ANIMATIONS
 #define RGBLIGHT_SLEEP
+#define RGBLIGHT_SPLIT
 
 #define BACKLIGHT_PIN D4
+
+/* Rotary encoder */
+#define TAP_CODE_DELAY 10
+
+#define ENCODERS_PAD_A { D1 }
+#define ENCODERS_PAD_B { D6 }
+
+#define ENCODER_RESOLUTION 1
+
+/* #define ENCODER_DIRECTION_FLIP */
+
+/* Tap dance */
+#define TAPPING_TERM 200
