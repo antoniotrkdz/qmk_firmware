@@ -15,7 +15,8 @@ bool led_update_user(led_t led_state) {
 /* Macros enum */
 enum {
     SCAD_TRANS,
-    SCAD_ROT
+    SCAD_ROT,
+    TEAMS_M_TOG
 };
 
 /* Tap dance stuff */
@@ -45,10 +46,10 @@ void noend_finished(qk_tap_dance_state_t *state, void *user_data);
 void noend_reset(qk_tap_dance_state_t *state, void *user_data);
 
 /* RGB light timeout stuff */
-#define RGBLIGHT_TIMEOUT 5    // minutes
-static uint16_t idle_timer = 0;
-static uint8_t halfmin_counter = 0;
-static bool rgb_on = true;
+// #define RGBLIGHT_TIMEOUT 5    // minutes
+// static uint16_t idle_timer = 0;
+// static uint8_t halfmin_counter = 0;
+// static bool rgb_on = true;
 
 /* Matrix and layers */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -74,7 +75,7 @@ SCAD_TRANS,  SCAD_ROT,    KC_GRAVE, KC_1,    KC_2,    KC_3,   KC_4,   KC_5,   KC
 KC_6,  KC_7,    KC_TAB,   KC_Q,    KC_W,    KC_E,   KC_R,   KC_T,                 KC_Y,   KC_U,   KC_I,    KC_O,   KC_P,    KC_LBRC,  KC_RBRC,  KC_BSLS,           KC_PGUP,
 KC_4,  KC_5,    KC_LCTL,  KC_A,    KC_S,    KC_D,   KC_F,   KC_G,                 KC_H,   KC_J,   KC_K,    KC_L,   KC_SCLN, KC_QUOT,  KC_ENTER,                    KC_PGDN,
 KC_2,  KC_3,    KC_LSFT,  KC_Z,    KC_X,    KC_C,   KC_V,   KC_B,                 KC_N,   KC_M,   KC_COMM, KC_DOT, KC_SLSH,                     KC_RSFT,  KC_UP,   TD(NO_END),
-KC_0,  KC_1,    KC_LCTL,  KC_LGUI, KC_LALT, MT(MOD_LGUI, KC_SPC), TD(F13_LAYER),                       KC_SPC,         KC_RALT, MO(1), KC_RCTL,               KC_LEFT,  KC_DOWN, KC_RIGHT
+TEAMS_M_TOG,  KC_1,    KC_LCTL,  KC_LGUI, KC_LALT, MT(MOD_LGUI, KC_SPC), TD(F13_LAYER),                       KC_SPC,         KC_RALT, MO(1), KC_RCTL,               KC_LEFT,  KC_DOWN, KC_RIGHT
   ),
 
     [1] = LAYOUT(
@@ -152,7 +153,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             SEND_STRING("rotate([ 0 , 0 , 0 ])");
         }
         break;
+
+    case TEAMS_M_TOG:
+        if (record->event.pressed) {
+            SEND_STRING(SS_LCTL(SS_LSFT("m")));
+        }
+        break;
     }
+        
 
     return true;
 }
@@ -171,7 +179,7 @@ void matrix_scan_user(void) {
     }
 
 /* RGB Light timer stuff */
-    if (idle_timer == 0) idle_timer = timer_read(); // idle_timer needs to be set one time
+    // if (idle_timer == 0) idle_timer = timer_read(); // idle_timer needs to be set one time
 
     #ifdef RGBLIGHT_ENABLE
         if ( rgb_on && timer_elapsed(idle_timer) > 30000) {
@@ -188,7 +196,7 @@ void matrix_scan_user(void) {
 }
 
 /* Various functions of the encoder */
-void encoder_update_user(uint8_t index, bool clockwise) {
+bool encoder_update_user(uint8_t index, bool clockwise) {
     if (IS_LAYER_ON(0)) {
         if (clockwise) {
             tap_code(KC_WH_U);
@@ -208,6 +216,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
           tap_code16(C(KC_TAB));
         }
     }
+    return true;
 }
 
 /* Return an integer that corresponds to what kind of tap dance should be executed.
