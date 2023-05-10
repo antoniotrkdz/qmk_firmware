@@ -8,8 +8,15 @@
         "pid": "0x0121",
         "device_version": "1.0.0"
     },
+    "encoder": {
+        "rotary": [
+            {"pin_a": "A10", "pin_b": "A8"}
+        ]
+    },
+    "processor": "STM32L432",
+    "bootloader": "stm32-dfu",
     "layouts": {
-        "LAYOUT_ansi_88": {
+        "LAYOUT_tkl_f13_ansi": {
             "layout": [
                 {"matrix":[0, 0], "x":0, "y":0},
                 {"matrix":[0, 1], "x":1.25, "y":0},
