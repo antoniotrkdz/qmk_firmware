@@ -41,14 +41,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     RGB_MOD,            _______, RGB_SAD, RGB_SAI, _______, _______, _______,     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,         _______,
     KC_VOLU,            _______, RGB_VAD, RGB_VAI, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______,
     KC_VOLD,            EE_CLR,  _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, EE_CLR
-  ) //,
-  // [2] = LAYOUT(
-  //   _______, _______, _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______, _______,
-  //   _______,          _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______, _______,
-  //   _______,          _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______,          _______,
-  //   _______,          _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______,
-  //   _______,          _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______
-  // )
+  )
 };
 
 void keyboard_post_init_user(void) {
@@ -56,11 +49,10 @@ void keyboard_post_init_user(void) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
- 
     rgblight_set_layer_state(0, layer_state_cmp(state, _FN));
-
     return state;
 }
+
 // layer_state_t layer_state_set_user(layer_state_t state) {
 //     switch (get_highest_layer(state)) {
 //         case _FN:
@@ -73,3 +65,24 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 //     }
 //   return state;
 // }
+
+// bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+//   switch (keycode) {
+//       case T_MUTE:
+//           if (record->event.pressed) {
+//             SEND_STRING(SS_LSFT(SS_LCTL(("m")));
+//             // SEND_STRING ("g");
+//           } 
+//           break;
+//       }
+//   return true;
+// }
+
+// #ifdef ENCODER_MAP_ENABLE
+// const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
+//     [0] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
+//     [1] = { ENCODER_CCW_CW(RGB_RMOD, RGB_MOD) },
+//     [2] = { ENCODER_CCW_CW(RGB_HUD, RGB_HUI) },
+//     [3] = { ENCODER_CCW_CW(RGB_SAD, RGB_SAI) },
+// };
+// #endif

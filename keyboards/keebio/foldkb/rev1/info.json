@@ -1,5 +1,6 @@
 {
     "keyboard_name": "FoldKB Rev. 1",
+    "menus":["qmk_rgblight"],
     "manufacturer": "Keebio",
     "url": "https://keeb.io",
     "maintainer": "nooges",
